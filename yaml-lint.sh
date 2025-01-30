@@ -18,3 +18,15 @@ if [ -z "$YAML_FILES" ]; then
     echo "No YAML files found in the specified directory or file(s)."
     exit 0
 fi
+
+# Run yamllint on each YAML file
+EXIT_CODE=0
+for FILE in $YAML_FILES; do
+    echo "Linting $FILE"
+    yamllint "$FILE"
+    if [ $? -ne 0 ]; then
+        EXIT_CODE=1
+    fi
+done
+
+exit $EXIT_CODE
